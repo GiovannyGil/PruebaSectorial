@@ -1,4 +1,12 @@
 /* General layout */
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: bold;
+  }
+
 .form-container {
     background-color: #fff;
     padding: 15px;

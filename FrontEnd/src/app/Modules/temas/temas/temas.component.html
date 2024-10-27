@@ -1,0 +1,51 @@
+<h1>Gestión de Temas</h1>
+
+<!-- Formulario para agregar un nuevo tema -->
+<div class="form-container">
+    <h2>Agregar Nuevo Tema</h2>
+    <form (ngSubmit)="agregarTema()" #temaForm="ngForm">
+        <div class="input-group">
+          <label for="nombre">Nombre del Tema:</label>
+          <input
+            type="text"
+            id="nombre"
+            [(ngModel)]="nombre"
+            name="nombre"
+            required
+            minlength="3"
+            maxlength="50"
+            #nombreInput="ngModel"
+            placeholder="Escribe el nombre del tema"
+          />
+          <div *ngIf="nombreInput.invalid && (nombreInput.dirty || nombreInput.touched)">
+            <small *ngIf="nombreInput.errors?.['required']">El nombre es obligatorio.</small>
+            <small *ngIf="nombreInput.errors?.['minlength']">Mínimo 3 caracteres.</small>
+            <small *ngIf="nombreInput.errors?.['maxlength']">Máximo 50 caracteres.</small>
+          </div>
+        </div>
+        <button type="submit" class="enviar" [disabled]="temaForm.invalid">Guardar</button>
+      </form>
+  </div>
+  
+  <!-- Tabla para listar los temas -->
+  <table class="styled-table">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tema of temas">
+        <td>{{ tema.nombre }}</td>
+        <td>{{ tema.inactivo ? 'Inactivo' : 'Activo' }}</td>
+        <td>
+          <button (click)="inactivarTema(tema._id)" [disabled]="tema.inactivo">
+            Inactivar
+          </button>
+          <button class="eliminar" (click)="eliminarTema(tema._id)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>

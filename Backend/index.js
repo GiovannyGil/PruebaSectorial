@@ -13,10 +13,10 @@ const app = express()
 connectDB()
 
 // middlewares
+app.use(cors()) // para que cualquier dominio lea o haga peticiones
 app.use(morgan('dev')) // para ver las peticiones en consola
 app.use(express.json()) // para que pueda recibir datos en formato json
 app.use(express.urlencoded({ extended: true })) // para que pueda recibir datos de formularios
-app.use(cors()) // para que cualquier dominio lea o haga peticiones
 
 // rutas -> categorias
 import rutasCategoria from './src/routes/categorias.router.js'

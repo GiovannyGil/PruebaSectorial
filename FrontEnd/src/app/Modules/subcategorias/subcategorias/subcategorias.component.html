@@ -1,0 +1,69 @@
+<h1>Gestión de Subcategorías</h1>
+
+<!-- Formulario para agregar una nueva subcategoría -->
+<div class="form-container">
+  <h2>Agregar Nueva Subcategoría</h2>
+  <form (ngSubmit)="agregarSubcategoria()" #subForm="ngForm">
+    <div class="input-group">
+      <label for="nombre">Nombre de la Subcategoría:</label>
+      <input
+        type="text"
+        id="nombre"
+        [(ngModel)]="nombre"
+        name="nombre"
+        required
+        minlength="3"
+        maxlength="50"
+        placeholder="Escribe el nombre de la subcategoría"
+      />
+    </div>
+
+    <div class="input-group">
+      <label>Temas:</label>
+      <div *ngFor="let tema of temas">
+        <input 
+          type="checkbox" 
+          [value]="tema._id" 
+          (change)="toggleTema($event)" 
+        />
+        {{ tema.nombre }}
+      </div>
+    </div>
+
+    <button class="enviar" type="submit" [disabled]="subForm.invalid">Guardar</button>
+  </form>
+</div>
+
+<!-- Tabla para listar las subcategorías -->
+<table class="styled-table">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Temas</th>
+      <th>Estado</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let subcategoria of subcategorias">
+      <td>{{ subcategoria.nombre }}</td>
+      <td>{{ obtenerNombresTemas(subcategoria.temas) }}</td>
+      <td>{{ subcategoria.inactivo ? 'Inactivo' : 'Activo' }}</td>
+      <td>
+        <button 
+          class="inactivar" 
+          (click)="inactivarSubcategoria(subcategoria._id)" 
+          [disabled]="subcategoria.inactivo"
+        >
+          Inactivar
+        </button>
+        <button 
+          class="eliminar" 
+          (click)="eliminarSubcategoria(subcategoria._id)"
+        >
+          Eliminar
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
